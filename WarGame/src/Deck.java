@@ -8,22 +8,35 @@ public class Deck {
         populateDeck();
         getTrumpCard();
     }
+
+    /**
+     * The method prints all deck cards
+     */
     public void printDeck(){
         for(int i = 0; i < 52; i++){
-            System.out.println(this.deck[i].value + " of " + this.deck[i].suit);
+            if(this.deck[i] == null)
+                break;
+            else System.out.println(this.deck[i].value + " of " + this.deck[i].suit);
         }
     }
+
+    /**
+     * The method fills the selected deck with cards
+     */
     private void populateDeck(){
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < Suit.values().length; i++){
             Suit suit = Suit.values()[i];
-            for(int j = 0; j < 13; j++){
+            for(int j = 0; j < CardValue.values().length-1; j++){
                 CardValue value = CardValue.values()[j];
                 Card card = new Card(suit, value);
                 this.deck[count++] = card;
             }
         }
     }
-    //Fisher-Yates
+
+    /**
+     * The method shuffles the deck using the Fisher-Yates algorithm
+     */
     public void shuffle(){
         int n = deck.length;
         Random r = new Random();
@@ -35,12 +48,25 @@ public class Deck {
             this.deck[j] = temp;
         }
     }
+
+    /**
+     * The method randomly selects a trump card from a deck of cards
+     */
     private void getTrumpCard(){
         int r = new Random().nextInt(deck.length);
-        //this.deck[r].value.setValue(CardValue.Trump.getValue())
-        System.out.println("Trump card is: " + this.deck[r].value + " of " + this.deck[r].suit);
-        this.deck[r] = new Card(this.deck[r].suit, CardValue.Trump);
+        if(this.deck[r] == null)
+            doNothing();
+        else {
+            System.out.println("Trump card is: " + this.deck[r].value + " of " + this.deck[r].suit);
+            this.deck[r] = new Card(this.deck[r].suit, CardValue.Trump);
+        }
     }
+
+    /**
+     * The method distributes cards to the player.
+     * @param even boolean value
+     * @return Player stack of cards
+     */
     public Stack<Card> distributeCards(boolean even){
         Stack<Card> stack = new Stack<>();
         int i = even ? 0 : 1;
@@ -49,5 +75,5 @@ public class Deck {
         }
         return stack;
     }
-
+    private void doNothing(){};
 }
