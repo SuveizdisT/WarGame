@@ -18,12 +18,6 @@ public enum CardValue {
     CardValue(int value){
         this.cardValue = value;
     }
-    public int getValue(){
-        return this.cardValue;
-    }
-    public void setValue(int value){
-        this.cardValue = value;
-    }
     public boolean isFirstStronger(CardValue second){
         return this.cardValue > second.cardValue;
     }
